@@ -1,8 +1,7 @@
 FROM ubuntu:14.04
-MAINTAINER Jason Wilder jwilder@litl.com
+MAINTAINER Joshua Rubin jrubin@zvelo.com
 
-RUN apt-get update
-RUN apt-get install -y wget python python-pip python-dev libssl-dev
+RUN apt-get update && apt-get install -y wget python python-pip python-dev libssl-dev libffi-dev
 
 RUN mkdir /app
 WORKDIR /app
