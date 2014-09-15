@@ -1,0 +1,13 @@
+{
+    "github": {
+        "repo": "docker-register"
+    },
+    "pivotal_tracker": {
+        "project": {
+            "id": 933918
+        }
+    },
+    "hipchat": {
+        "room": "NoHAP"
+    }
+}
