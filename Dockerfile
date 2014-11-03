@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Joshua Rubin jrubin@zvelo.com
+MAINTAINER Carl Saturnino csaturnino@zvelo.com
 
 RUN apt-get update && apt-get install -y wget python python-pip python-dev libssl-dev libffi-dev
 
