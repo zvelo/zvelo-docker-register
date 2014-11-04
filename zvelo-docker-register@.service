@@ -7,13 +7,12 @@ EnvironmentFile=/etc/environment
 TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill %p-%i
 ExecStartPre=-/usr/bin/docker rm %p-%i
-ExecStartPre=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /config/shared/docker/registry/host); \
-    DOCKER_IMAGE_NAME=$(/bin/etcdctl get /config/system/zvelo/docker-register/image); \
+ExecStartPre=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /config/shared/docker/RegistryHost); \
+    DOCKER_IMAGE_NAME=$(/bin/etcdctl get /config/system/docker/service/zvelo-docker-register/ImageName); \
     exec /usr/bin/docker pull $DOCKER_REGISTRY_HOST''$DOCKER_IMAGE_NAME"
 
-#docker run --name docker-register -d -e HOST_IP=$(hostname --all-ip-addresses | awk '{print $1}') -e ETCD_HOST=10.170.71.226:4001 -v /var/run/docker.sock:/var/run/docker.sock -t jwilder/docker-register
-ExecStart=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /config/shared/docker/registry/host); \
-    DOCKER_IMAGE_NAME=$(/bin/etcdctl get /config/system/zvelo/docker-register/image); \
+ExecStart=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /config/shared/docker/RegistryHost); \
+    DOCKER_IMAGE_NAME=$(/bin/etcdctl get /config/system/docker/service/zvelo-docker-register/ImageName); \
     exec /usr/bin/docker run --rm --name=%p-%i \
     #-e HOST_IP=$(hostname --all-ip-addresses | awk '{print $1}') \
     -e HOST_IP=$COREOS_PUBLIC_IPV4 \
