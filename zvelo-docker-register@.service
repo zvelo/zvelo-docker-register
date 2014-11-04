@@ -8,18 +8,20 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill %p-%i
 ExecStartPre=-/usr/bin/docker rm %p-%i
 ExecStartPre=/bin/bash -c "AF_DOCKER_REGISTRY=$(/bin/etcdctl get /config/adfraud/docker/registry/host); \
-DOCKER_IMAGE=$(/bin/etcdctl get /config/adfraud/nsq/daemon/image); \
-exec /usr/bin/docker pull $AF_DOCKER_REGISTRY''$DOCKER_IMAGE"
+  DOCKER_IMAGE=$(/bin/etcdctl get /config/adfraud/nsq/daemon/image); \
+  exec /usr/bin/docker pull $AF_DOCKER_REGISTRY''$DOCKER_IMAGE"
+
+#docker run --name docker-register -d -e HOST_IP=$(hostname --all-ip-addresses | awk '{print $1}') -e ETCD_HOST=10.170.71.226:4001 -v /var/run/docker.sock:/var/run/docker.sock -t jwilder/docker-register
 ExecStart=/bin/bash -c "AF_DOCKER_REGISTRY=$(/bin/etcdctl get /config/adfraud/docker/registry/host); \
-DOCKER_IMAGE=$(/bin/etcdctl get /config/adfraud/nsq/daemon/image); \
-exec /usr/bin/docker run --rm --name=%p-%i \
--p $(/bin/etcdctl get /config/adfraud/nsq/daemon/aport):$(/bin/etcdctl get /config/adfraud/nsq/daemon/aport) \
--p $(/bin/etcdctl get /config/adfraud/nsq/daemon/bport):$(/bin/etcdctl get /config/adfraud/nsq/daemon/bport) \
-$AF_DOCKER_REGISTRY''$DOCKER_IMAGE --lookupd-tcp-address=$(/usr/bin/etcdctl get /config/adfraud/nsq/lookup/address):$(/usr/bin/etcdctl get /config/adfraud/nsq/lookup/aport)\
--broadcast-address=$COREOS_PUBLIC_IPV4 -msg-timeout=$(/usr/bin/etcdctl get /config/adfraud/nsq/msqtimeout) "
-ExecStartPost=/usr/bin/etcdctl set /domains/%p/%H:%i running
+  DOCKER_IMAGE=$(/bin/etcdctl get /config/adfraud/nsq/daemon/image); \
+  exec /usr/bin/docker run --rm --name=%p-%i \
+  -e HOST_IP=$(hostname --all-ip-addresses | awk '{print $1}') \
+  -e ETCD_HOST=127.0.0.1:4001 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -t $AF_DOCKER_REGISTRY''$DOCKER_IMAGE "
+#ExecStartPost=/usr/bin/etcdctl set /domains/%p/%H:%i running
 ExecStop=/usr/bin/docker stop %p-%i
-ExecStopPost=/usr/bin/etcdctl rm /domains/%p/%H:%i
+#ExecStopPost=/usr/bin/etcdctl rm /domains/%p/%H:%i
 
 [X-Fleet]
 Conflicts=zvelo-docker-register*
