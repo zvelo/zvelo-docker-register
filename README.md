@@ -1,7 +1,15 @@
 ### Build Image
 docker build -t zvelo/zvelo-docker-register .
 
+### Usage
 
+To run it:
+
+    fleetctl submit zvelo-docker-register@.service
+    fleetctl start zvelo-docker-register@1.service
+
+
+``
 ### Original README
 docker-register sets up a container running [docker-gen][1].  docker-gen dynamically generate a
 python script when containers are started and stopped.  This generated script registers the running
@@ -48,3 +56,4 @@ over port 80, then one will need to use a port 80 and the other a different port
 * Support multiple ports
 * Make ETCD prefix configurable
 * Support other backends (consul, zookeeper, redis, etc.)
+``
