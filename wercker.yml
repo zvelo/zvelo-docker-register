@@ -1,0 +1,43 @@
+box: wercker-labs/docker
+
+# Build definition
+build:
+    steps:
+        # Build the project
+        - script:
+            name: go build
+            code: make build
+
+        # Test the project
+        - script:
+            name: go test
+            code: make coveralls
+
+        # Save docker image
+        - script:
+            name: docker save
+            code: |
+                make image
+                docker save zvelo/adfraud-yslow > ${WERCKER_OUTPUT_DIR}/zvelo-adfraud-yslow.tar
+
+    after-steps:
+        - hipchat-notify:
+            token: $HIPCHAT_TOKEN
+            room-id: $HIPCHAT_ROOM_ID
+
+deploy:
+  steps:
+      # Push the image to the hub
+      - zvelo/docker-hub-push:
+            image: zvelo/adfraud-yslow
+            username: $DOCKER_USERNAME
+            password: $DOCKER_PASSWORD
+            pone: $DOCKER_PONE
+            ptwo: $DOCKER_PTWO
+            pthree: $DOCKER_PTHREE
+            email: $DOCKER_EMAIL
+       
+  after-steps:
+    - hipchat-notify:
+        token: $HIPCHAT_TOKEN
+        room-id: $HIPCHAT_ROOM_ID
