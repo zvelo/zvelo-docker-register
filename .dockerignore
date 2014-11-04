@@ -1,4 +1,7 @@
 .git
 README.md
+<<<<<<< HEAD
 wercker.yml
 .wercker
+=======
+>>>>>>> feature/81819750_csaturnino_create_systemd_unit_file
