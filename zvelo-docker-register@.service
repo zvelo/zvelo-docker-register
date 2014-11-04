@@ -14,7 +14,6 @@ ExecStartPre=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /config/share
 ExecStart=/bin/bash -c "DOCKER_REGISTRY_HOST=$(/bin/etcdctl get /config/shared/docker/RegistryHost); \
     DOCKER_IMAGE_NAME=$(/bin/etcdctl get /config/system/docker/service/zvelo-docker-register/ImageName); \
     exec /usr/bin/docker run --rm --name=%p-%i \
-    #-e HOST_IP=$(hostname --all-ip-addresses | awk '{print $1}') \
     -e HOST_IP=$COREOS_PUBLIC_IPV4 \
     -e ETCD_HOST=$COREOS_PUBLIC_IPV4:4001 \
     -v /var/run/docker.sock:/var/run/docker.sock \
