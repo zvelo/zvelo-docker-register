@@ -5,20 +5,15 @@ build:
     steps:
         # Build the project
         - script:
-            name: go build
-            code: make build
-
-        # Test the project
-        - script:
-            name: go test
-            code: make coveralls
+            name: docker build
+            code: |
+                docker build -t zvelo/zvelo-docker-register
 
         # Save docker image
         - script:
             name: docker save
             code: |
-                make image
-                docker save zvelo/adfraud-yslow > ${WERCKER_OUTPUT_DIR}/zvelo-adfraud-yslow.tar
+                docker save zvelo/zvelo-docker-register > ${WERCKER_OUTPUT_DIR}/zvelo-docker-register.tar
 
     after-steps:
         - hipchat-notify:
@@ -29,12 +24,9 @@ deploy:
   steps:
       # Push the image to the hub
       - zvelo/docker-hub-push:
-            image: zvelo/adfraud-yslow
+            image: zvelo/zvelo-docker-register
             username: $DOCKER_USERNAME
             password: $DOCKER_PASSWORD
-            pone: $DOCKER_PONE
-            ptwo: $DOCKER_PTWO
-            pthree: $DOCKER_PTHREE
             email: $DOCKER_EMAIL
        
   after-steps:
