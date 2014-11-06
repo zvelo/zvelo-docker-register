@@ -25,6 +25,7 @@ deploy:
       # Push the image to the hub
       - zvelo/docker-hub-push:
             image: zvelo/zvelo-docker-register
+            tarfile: zvelo-docker-register.tar
             username: $DOCKER_USERNAME
             password: $DOCKER_PASSWORD
             email: $DOCKER_EMAIL
