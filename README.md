@@ -1,3 +1,5 @@
+[![wercker status](https://app.wercker.com/status/539604dd8f44e2fe2be5f46ac4442cd9/m "wercker status")](https://app.wercker.com/project/bykey/539604dd8f44e2fe2be5f46ac4442cd9)
+
 ### Build Image
 docker build -t zvelo/zvelo-docker-register .
 
