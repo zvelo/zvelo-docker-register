@@ -28,7 +28,7 @@ deploy:
             username: $DOCKER_USERNAME
             password: $DOCKER_PASSWORD
             email: $DOCKER_EMAIL
-       
+
   after-steps:
     - hipchat-notify:
         token: $HIPCHAT_TOKEN
