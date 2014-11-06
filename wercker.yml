@@ -7,7 +7,7 @@ build:
         - script:
             name: docker build
             code: |
-                docker build -t zvelo/zvelo-docker-register
+                docker build -t zvelo/zvelo-docker-register .
 
         # Save docker image
         - script:
