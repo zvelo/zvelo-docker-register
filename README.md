@@ -1,4 +1,7 @@
-[![wercker status](https://app.wercker.com/status/539604dd8f44e2fe2be5f46ac4442cd9/m "wercker status")](https://app.wercker.com/project/bykey/539604dd8f44e2fe2be5f46ac4442cd9)
+zvelo-docker-register
+=====================
+
+[![wercker status](https://app.wercker.com/status/539604dd8f44e2fe2be5f46ac4442cd9/s "wercker status")](https://app.wercker.com/project/bykey/539604dd8f44e2fe2be5f46ac4442cd9)
   
 zvelo-docker-regsiter is a fork of jwilder/docker-register.  It handles the registration of other zvelo services containers running on the same host in etcd.  The zvelo services containers that need to be registered must expose a port.  The zvelo-docker-register container must be launched on all hosts.
    
